@@ -19,8 +19,13 @@ app.get('/layout', (req, res, next) => {
   res.render('layout.hbs');
 })
 app.get('/beers', (req, res, next ) => {
+  punkAPI.getBeers()
+  .then((beers) => {
   res.render('beers.hbs');
-})
+  })
+  
+  }
+)
 
 
 app.listen(3000);
