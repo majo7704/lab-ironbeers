@@ -22,7 +22,7 @@ app.get('/beers', (req, res, next ) => {
   punkAPI.getBeers()
   .then((beers) => {
     console.log('beers', beers)
-    res.render('beers', {beers});
+    res.render('beers', {beers: beers});
   })
   .catch(err => {
     console.log('error' + errs)
@@ -30,6 +30,14 @@ app.get('/beers', (req, res, next ) => {
   
   }
 )
+app.get('/', (request, response, next) => {
+  var randomBeer = punkAPI[Math.floor(Math.random() * punkAPI.length)];
+  response.render("home", {
+    beer: randomBeer
+  });
+})
 
 
-app.listen(3000);
+app.listen(3000, () => {
+  console.log('My first app listening on port 3000!')
+});
