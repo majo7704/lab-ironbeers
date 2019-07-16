@@ -13,15 +13,19 @@ hbs.registerPartials(__dirname + '/views/partials')
 
 
 app.get('/', (req, res, next) => {
-  res.render('index.hbs');
+  res.render('index');
 });
 app.get('/layout', (req, res, next) => {
-  res.render('layout.hbs');
+  res.render('layout');
 })
 app.get('/beers', (req, res, next ) => {
   punkAPI.getBeers()
   .then((beers) => {
-  res.render('beers.hbs');
+    console.log('beers', beers)
+    res.render('beers', {beers});
+  })
+  .catch(err => {
+    console.log('error' + errs)
   })
   
   }
