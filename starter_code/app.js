@@ -13,30 +13,39 @@ hbs.registerPartials(__dirname + '/views/partials')
 
 
 app.get('/', (req, res, next) => {
-  res.render('index');
+  res.render('index.hbs');
 });
-app.get('/layout', (req, res, next) => {
-  res.render('layout');
-})
-app.get('/beers', (req, res, next ) => {
+
+app.get('/beers', (req, res, next ) => {//path to
   punkAPI.getBeers()
   .then((beers) => {
     console.log('beers', beers)
-    res.render('beers', {beers: beers});
+    res.render('beers.hbs', {beers: beers});
   })
   .catch(err => {
-    console.log('error' + errs)
+    console.log('error' + err)
   })
   
   }
 )
-app.get('/', (request, response, next) => {
-  var randomBeer = punkAPI[Math.floor(Math.random() * punkAPI.length)];
-  response.render("home", {
-    beer: randomBeer
-  });
+app.get('/random-beer', (request, res, next) => {
+  punkAPI.getRandom()
+  .then((beer) => {
+    res.render('randomBeer.hbs', {beer}) //object beer that will render on beer-random page
+  })
+  .catch(err => {
+    console.log('error' + err)
+  })
 })
-
+app.get("/beers/:id", (req, res, next) => {//dynamic routes, query instead for dynamic routes
+  punkAPI.getBeer(req.params.id)
+  .then((beer) =>{
+    res.render('randomBeer.hbs', {beer})
+  })
+  .catch(err => {
+    console.log('error' + err)
+  })
+})
 
 app.listen(3000, () => {
   console.log('My first app listening on port 3000!')
